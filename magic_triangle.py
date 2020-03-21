@@ -1,25 +1,51 @@
-def display(row,m,n,total):
-   start=n
-   print(" "*start,1)
-   
-   space=0
-   k=total-1
-   for i in range(1,n):
-                if space==0:
-                  print(" "*(start-i),row[i],row[k])
-                else:
-                  new_space=int((space+int((i-2))))
-                  print(" "*(start-i),row[i]," "*new_space,row[k])
-                space+=1
-                k-=1
-      
-   print(" "*(start-n),end=" ")
-   for i in range(m,2*m):
-      print(row[i-1],end=" ")
+def digit_count(digit):
+    digit=str(digit)
+    count=0
+    for i in digit:
+        count+=1
+    return int(count)
+    
+def digit_diff(digit,digit_2):
+    diff=digit_count(digit_2)-digit_count(digit)
+    return int(abs(diff))
 
-   sum=1+3*n*(n+1)/2
-   print('')
-   print("Sum is : ",int(sum))
+def row_converter(row):
+	last=0
+	for i in row:
+		last+=1
+	n=int(last/3)
+	
+	count=digit_count(last)
+	space=count
+	total=space*n
+	difference=digit_diff(1,3*n)
+	sec_space=1*space
+	magic_row=[i for i in range(n)]
+	magic_row.append('')
+	last_row=''   
+	magic_row[0]=' '*total+' '*difference+'1'
+	total-=1
+	
+	for i in range(1,n):
+		espace=0
+		if digit_count(row[i])>1:
+			espace=count-digit_count(row[i])-1
+		magic_row[i]=' '*(total+espace)+str(row[i])+' '*(sec_space+count-digit_count(row[3*n-i]))+str(row[3*n-i])
+
+		sec_space=sec_space+2*space
+		total=total-1*count
+
+	for i in range(n,2*n+1):
+		last_row=last_row+' '*abs(count-digit_count(row[i]))+str(row[i])+' '*space
+	magic_row[n]=last_row  
+	return magic_row
+
+def display(row):
+    for i in row:
+        print(i)
+
+
+    
 
    
 def odd_row(row,m,n,total):
@@ -51,20 +77,20 @@ def main():
    m=int(input("Enter the no of Elements in one side>2: "))
    n=m-1
    total=3*n
+   sum=int(1+3*n*(n+1)/2)
    row=[i for i in range(1,total+1)]
-   display(row,m,n,total)
+   display(row_converter(row))
    print('')
    print("Magic trangle is : ")
    if (n%2==0):
            magic_row=even_row(row,m,n,total)
-           display(magic_row,m,n,total)
+           display(row_converter(magic_row))
    else:
            magic_row=odd_row(row,m,n,total)
-           display(magic_row,m,n,total)
-
+           display(row_converter(magic_row))
+   
    print("")
-#  display(row,m,n,total)
-
+   print("Sum = ",sum)   
 a=1
 while(a!=0):
    main()
