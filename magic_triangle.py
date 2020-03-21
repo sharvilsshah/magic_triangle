@@ -44,9 +44,6 @@ def display(row):
     for i in row:
         print(i)
 
-
-    
-
    
 def odd_row(row,m,n,total):
    row1=row[0:int(m/2)]
@@ -95,6 +92,3 @@ a=1
 while(a!=0):
    main()
    a=int(input("0 to out: "))
-
-
-
